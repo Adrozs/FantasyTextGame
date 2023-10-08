@@ -76,20 +76,6 @@ namespace FantasyConsoleGame.HeroClasses
         // beroende på vilket monster så får man mer eller mindre xp
         // kanske att man får en mindre mängd xp för varje location? men känns kanske lite onödigt
 
-
-        //OBS!!! Notera att jag tror jag fuckade upp lite.
-        // I varje klass så skapar jag en ny Hero / Monster / Misc. Det får mig att tro (är inte säker)
-        // att det kommer bli knas för det finns ju bara 1 monster då så att säga
-        // så känns som att jag på något sätt måste skapa ett nytt monster i varje encounter och sen skicka in den
-        // till hero? annars så sätts ju hp till 0 och sen är det alltid noll??? eller tänker jag fel.
-        // Ville bara notera ner detta ifall saker går åt helvete och jag inte fattar varför
-
-        // saker gick åt helvete. Tror det blev knas pga att jag skapar en hero/misc/monster i varje class
-        // så den skapar en hero som skapar ett monster som skapar en hero som skapar ett monster etc etc
-        //allt funkade tills jag flyttade in det i klasser så i värsta fall, släng ba in skiten tillbaka i 
-        // program.cs och börja om xD
-
-
         // Hero variables
         public int Level { get; private set; }
         public int Xp { get; private set; }

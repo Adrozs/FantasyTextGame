@@ -18,15 +18,15 @@ namespace FantasyConsoleGame
             // Change color
             Console.ForegroundColor = ConsoleColor.DarkGray;
 
-            // Intro (commented away to easierly test the game)
-            //Console.WriteLine("(faint whisper) \"Hey...\"");
-            //Thread.Sleep(1500); // Waits 1,5 seconds 
-            //Console.WriteLine("(faint whisper) \"Hey you there\"");
-            //Thread.Sleep(1500); // Waits 1,5 seconds 
-            //Console.WriteLine("(faint whisper) \"It's time to wake up..\"");
-            //Thread.Sleep(1500); // Waits 1,5 seconds 
-            //Console.WriteLine("(faint whisper) \"A dangerous journey awaits you\"\n");
-            //Thread.Sleep(1500); // Waits 1,5 seconds 
+            // Intro
+            Console.WriteLine("(faint whisper) \"Hey...\"");
+            Thread.Sleep(1500); // Waits 1,5 seconds 
+            Console.WriteLine("(faint whisper) \"Hey you there\"");
+            Thread.Sleep(1500); // Waits 1,5 seconds 
+            Console.WriteLine("(faint whisper) \"It's time to wake up..\"");
+            Thread.Sleep(2000); // Waits 2 seconds 
+            Console.WriteLine("(faint whisper) \"A dangerous journey awaits you\"\n");
+            Thread.Sleep(2200); // Waits 2,2 seconds 
 
 
             // Choose hero
