@@ -18,20 +18,20 @@ namespace FantasyConsoleGame
             // Change color
             Console.ForegroundColor = ConsoleColor.DarkGray;
 
-            // Intro
-            Console.WriteLine("(faint whisper) \"Hey...\"");
-            Thread.Sleep(1500); // Waits 1,5 seconds 
-            Console.WriteLine("(faint whisper) \"Hey you there\"");
-            Thread.Sleep(1500); // Waits 1,5 seconds 
-            Console.WriteLine("(faint whisper) \"It's time to wake up..\"");
-            Thread.Sleep(2000); // Waits 2 seconds 
-            Console.WriteLine("(faint whisper) \"A dangerous journey awaits you\"\n");
-            Thread.Sleep(2200); // Waits 2,2 seconds 
+            // Intro (COMMENTED TO SKIP WHEN TESTING)
+            //Console.WriteLine("(faint whisper) \"Hey...\"");
+            //Thread.Sleep(1500); // Waits 1,5 seconds 
+            //Console.WriteLine("(faint whisper) \"Hey you there\"");
+            //Thread.Sleep(1500); // Waits 1,5 seconds 
+            //Console.WriteLine("(faint whisper) \"It's time to wake up..\"");
+            //Thread.Sleep(2000); // Waits 2 seconds 
+            //Console.WriteLine("(faint whisper) \"A dangerous journey awaits you\"\n");
+            //Thread.Sleep(2200); // Waits 2,2 seconds 
 
 
             // Choose hero
             Console.WriteLine("Who are you?");
-            Console.WriteLine("" +
+            Console.WriteLine(
                 "[1]: Knight - 100 HP - 20 Armour - 5  Damage \n" +
                 "[2]: Wizard - 80  HP - 0  Armour - 8  Damage \n" +
                 "[3]: Shadow - 50  HP - 10 Armour - 12 Damage");
@@ -52,7 +52,7 @@ namespace FantasyConsoleGame
             }
             else
             {
-                Console.WriteLine("Invalid choice. Default hero Knight has been chosen.");
+                Console.WriteLine("Invalid choice. Default hero, Knight has been chosen.");
                 hero = new Knight();
             }
 
@@ -98,19 +98,14 @@ namespace FantasyConsoleGame
                 break;
             }
 
+            // Initialize as false to ensure gameplay loop starts. When this is switched to false, game ends
+            bool gameOver = false; 
 
             // First battle before gamplay loop starts is forced
             Monster firstMonster = new Wolf();
-            firstMonster.MonsterEncounter(hero, firstMonster);
-
-            // ??
-            // After battle, if successful, add 1 to hero.LocationsVisited.
-            // After a certain LocationsVisited then something specific happens like camp / tavern, boss?
+            gameOver = firstMonster.MonsterEncounter(hero, firstMonster);
 
 
-            bool gameOver = false; // Initialize as false to ensure gameplay loop starts. When this is switched to false, game ends
-
-            // Random encounters 
             // Gameplay loop
             while (gameOver == false)
             {
@@ -124,6 +119,7 @@ namespace FantasyConsoleGame
                 // Randomize a location to go to and text comes up describing location
                 // Save current location to variable - OBS!!! Not sure what I'm gonna use CurrentLocation for yet?
                 hero.CurrentLocation = Locations.GoToNextLocation();
+                hero.LocationsVisited++; 
 
                 // Checks if there should be a battle, 65% chance for it to happen.
                 if (Misc.BattleChance() == true)
@@ -134,22 +130,18 @@ namespace FantasyConsoleGame
                     Monster monster = Monster.MonsterSelector(hero.Level);
                     gameOver = monster.MonsterEncounter(hero, monster);
                 }
-                
 
-                //OBS varför det blir error 
-                // Erroret kommer när det blir en battle. Problemet är med MonsterSelector, pga att den är static
-                // Visual studio sa att vi skulle implementera coden här i botten på rad 160. men det funkar inte
-                // blir bara not implementedexception.
-                // Måste lista ut något sätt att kunna nå MonsterSelector från program.cs för det verkar ej gå som
-                // static? Kan flytta den till misc men känns fel då allt monster är i Monster klassen. Fråga GTP
-
-                // Battle ensures.
+                // After battle
                 // if victory, continue.
-                // if dead, game over.
+                // if dead, game over
+                // Repeat until game over.
 
-                // and repeat until dead
+                // Need to implement game over text.
+                // Thinking just text that come out 1 sentence at a time with Thread.wait in between.
+                // something something your heroic journet come to an end, the evil won something something
 
-                // then we can modify to add xp, loot, items, levels, tavern/camp etc.
+
+                // Add xp, loot, items, levels, tavern/camp etc later.
             }
 
 

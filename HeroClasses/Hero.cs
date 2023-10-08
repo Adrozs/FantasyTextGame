@@ -88,7 +88,7 @@ namespace FantasyConsoleGame.HeroClasses
 
         // Location variables
         public string CurrentLocation { get; set; }
-        public int LocationsVisited { get; private set; }
+        public int LocationsVisited { get; set; }
 
 
         // Sets the Heros default values when spawning in
