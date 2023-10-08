@@ -76,6 +76,12 @@ namespace FantasyConsoleGame.HeroClasses
         // beroende på vilket monster så får man mer eller mindre xp
         // kanske att man får en mindre mängd xp för varje location? men känns kanske lite onödigt
 
+        // MAX HEALTH
+        // lägg till så att det finns en variable HpMax i både Hero och Monster.
+        // Ändra sen i PrintStats metoderna så att den skriver ut Hp/HpMax tex 83/100.
+        // Ser 100ggr bättre och snyggare ut!
+
+
         // Hero variables
         public int Level { get; private set; }
         public int Xp { get; private set; }

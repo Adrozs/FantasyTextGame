@@ -188,7 +188,6 @@ namespace FantasyConsoleGame.MonsterClasses
             return monster;
         }
 
-        // put into monster class and change name to PrintStats()
         // Prints monsters health and damage
         void MonsterPrintStats(Monster monster)
         {
