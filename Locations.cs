@@ -24,7 +24,7 @@ namespace FantasyConsoleGame
                 "Chaos and remnants of a fierce battle greet you in this abandoned goblin campsite, \nwith crude weapons and the remains of slain creatures covering the ground.",
                 "As you venture into a swamp, murky waters and twisted trees create an ominous atmosphere, \nconcealing the secrets that lie beneath the surface.",
                 "Treetop dwellings and elegant bridges hint at the presence of elusive beings as you enter this enchanted grove, \nwhere nature and magic intertwine.",
-                "You saee sun-bleached bones and tattered flags that mark this pirate cove, \na haven for scoundrels, where tales of adventure and treachery echo in the salty breeze.",
+                "You see sun-bleached bones and tattered flags that mark this pirate cove, \na haven for scoundrels, where tales of adventure and treachery echo in the salty breeze.",
                 "Stepping onto a magical, floating island through a hidden portal, \nyou find yourself in a place suspended between the realms, where gravity defies expectation.",
                 "Upon entering the cave, an eerie blue glow bathes you in an otherworldly light, \nrevealing ancient, mystical symbols on the walls, their meaning shrouded in mystery.",
                 "You find yourself in a serene forest clearing, \nwith sunlight filtering through the leaves above, creating a tranquil and idyllic setting."

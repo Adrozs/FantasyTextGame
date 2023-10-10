@@ -2,7 +2,10 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Linq.Expressions;
+using System.Reflection.Metadata.Ecma335;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 
 namespace FantasyConsoleGame.HeroClasses
@@ -87,6 +90,7 @@ namespace FantasyConsoleGame.HeroClasses
         public int Xp { get; private set; }
         public int Coin { get; set; }
         public int Hp { get; set; }
+        public int HpMax { get; set; }
         public int Armour { get; set; }
         public int Dmg { get; set; }
         public int WeaponDmg { get; set; }
@@ -109,6 +113,7 @@ namespace FantasyConsoleGame.HeroClasses
 
             // Combat values
             Hp = 100;
+            HpMax = Hp;
             Armour = 0;
             Dmg = 10;
             WeaponDmg = 0; // Adds to total damage 
@@ -126,22 +131,106 @@ namespace FantasyConsoleGame.HeroClasses
         // Put this in hero class
         public void PrintAllStats()
         {
+            //Change text color to dark gray (info color)
+            Console.ForegroundColor = ConsoleColor.DarkGray;
 
-            Console.WriteLine($"Stats: Level: {Level} \nXp: {Xp} \nHealth: {Hp} \nArmour: {Armour} \nDamage: {Dmg}");
+            Console.WriteLine($"Level: {Level} \nXp: {Xp} \nHealth: {Hp} \nArmour: {Armour} \nDamage: {Dmg}");
+            Thread.Sleep(1000); // Waits 1 second
+
+            //Change back text color (adventure color)
+            Console.ForegroundColor = ConsoleColor.DarkGreen;
         }
 
         // Prints hero's stats for the battles, only hp and dmg
         public void PrintBattleStats()
         {
 
-            Console.WriteLine($"Hero: Health: {Hp} Damage: {Dmg}");
+            Console.WriteLine($"You: | Health: {Hp}/{HpMax} | Damage: {Dmg} |");
         }
 
-        // Returns how big chance player has to run from an enemy based on a formula
+        // Returns how big chance player has to run from an enemy based on a formula (CHANGE THIS, bad calculation)
         public int FleeChance(Monster monster)
         {
-            return Hp * Dmg / (monster.Hp * monster.Dmg) * 10;
+            int fleeChance = (Hp / monster.Hp) * 10;
+
+            // If the chance to flee is more than 100, cap it at 100.
+            if (fleeChance > 100)
+                fleeChance = 100;
+
+            return fleeChance;
         }
+
+        public bool FleeAttempt(Monster monster)
+        {
+            // If Chance is less than FleeChance hero succeeds at escaping, so we return true
+            if (Misc.Chance() < FleeChance(monster))
+            {
+                FleePhraseSuccess(monster); // Prints out a phrase of how hero succeeded to flee
+                
+                //Change back text color (adventure color)
+                Console.ForegroundColor = ConsoleColor.DarkGreen;
+                
+                return true; // Flee attempt succeeded
+            }
+            // Else if chance was more than the chance to flee, hero failed at escaping, so we return false
+            else
+            {
+                FleePhraseFail(monster); // Prints out a phrase of how hero failed to flee
+                
+                //Change back text color (adventure color)
+                Console.ForegroundColor = ConsoleColor.DarkGreen;
+
+                return false; // Flee attempt failed
+            }
+        }
+
+        public int GainXp(Monster monster)
+        {
+            Random rnd = new Random(); // Create new random object
+
+            int xpGained;
+
+            int randomXp = rnd.Next(5,30); // Get a random value between 5 and 30
+
+            int lvlDiff = Math.Abs(Level - monster.Level); // Gets the difference in level between hero and monster
+
+
+            // If the level difference is x multiply xp by
+            switch (lvlDiff)
+            {
+                case 1:
+                    // If the monster is 1 level lower than you, you get 80% of the xp
+                    xpGained = (int)(randomXp * 0.80);
+                    Xp += xpGained; // Add xp gained to the Hero's stats
+
+                    return xpGained;
+                case 2:
+                    // If the monster is 2 levels lower than you, you get 60% of the xp
+                    xpGained = (int)(randomXp * 0.60);
+                    Xp += xpGained; // Add xp gained to the Hero's stats
+
+                    return xpGained;
+                case 3:
+                    // If the monster is 3 levels lower than you, you get 40% of the xp
+                    xpGained = (int)(randomXp * 0.40);
+                    Xp += xpGained; // Add xp gained to the Hero's stats
+
+                    return xpGained;
+                case 4:
+                    // If the monster is 4 levels lower than you, you get 20% of the xp
+                    xpGained = (int)(randomXp * 0.20); 
+                    Xp += xpGained; // Add xp gained to the Hero's stats
+
+                    return xpGained;
+                default:
+                    // If the enemy is the same level as you return full xp
+                    xpGained = (int)(randomXp);
+                    Xp += xpGained; // Add xp gained to the Hero's stats
+
+                    return randomXp;
+
+            }
+         }
 
         // Caluclates the chance for Hero to succeed at attack
         public int Attack()
@@ -166,53 +255,53 @@ namespace FantasyConsoleGame.HeroClasses
 
 
         // Returns a random successfull attack phrase
-        public string AttackPhraseSuccess()
+        public string AttackPhraseSuccess(Monster monster)
         {
             // Gets a random value to choose which of the 5 success phrases to return 
             Random rndAtt = new Random();
 
             // Array of success phrases
             string[] attackPhrase = {
-                "With a swift and precise strike, your weapon finds its mark, dealing a solid blow to the target.",
-                "Your attack lands true, causing the target to stagger back, wounded.",
-                "A resounding hit! The enemy reels from the impact of your hero's strike.",
-                "Your weapon slices through the air, connecting with the target and inflicting damage.",
-                "The enemy's defenses crumble before your skill, and they suffer a powerful hit."
+                $"With a swift and precise strike, your weapon finds its mark, dealing a solid blow to the {monster.Type.ToLower()}.",
+                $"Your attack lands true, causing the {monster.Type.ToLower()} to stagger back, wounded.",
+                $"A resounding hit! The {monster.Type.ToLower()} reels from the impact of your hero's strike.",
+                $"Your weapon slices through the air, connecting with the {monster.Type.ToLower()} and inflicting damage.",
+                $"The {monster.Type.ToLower()}'s defenses crumble before your skill, and they suffer a powerful hit."
                 };
 
             return attackPhrase[rndAtt.Next(0, 4)];
         }
 
         // Returns a random fail attack phrase
-        public string AttackPhraseFail()
+        public string AttackPhraseFail(Monster monster)
         {
             // Gets a random value to choose which of the 5 success phrases to return 
             Random rndAtt = new Random();
 
             // Array of 5 fail phrases
             string[] attackPhrase = {
-                "Your attack misses its mark, leaving them vulnerable for a moment.",
-                "The enemy deftly evades your hero's strike, leaving them unharmed.",
-                "Despite efforts, your attack goes wide, and the target remains unscathed.",
-                "The target skillfully parries your blow, preventing any damage.",
-                "Your attack falls short, and the enemy remains untouched by the assault."
+                "Your attack misses its mark, leaving you vulnerable for a moment.",
+                $"The {monster.Type.ToLower()} deftly evades your strike, leaving them unharmed.",
+                $"Despite efforts, your attack goes wide, and the {monster.Type.ToLower()} remains unscathed.",
+                $"The {monster.Type.ToLower()} skillfully parries your blow, preventing any damage.",
+                $"Your attack falls short, and the {monster.Type.ToLower()} remains untouched by the assault."
                 };
 
             return attackPhrase[rndAtt.Next(0, 4)];
         }
 
         // Returns a random battle victory phrase
-        public string BattleWonPhrase()
+        public string BattleWonPhrase(Monster monster)
         {
             // Gets a random value to choose which of the 4 success phrases to return
             Random rnd = new Random();
 
             // Array of success phrases
             string[] battleWonPhrase = {
-                "With a final, determined blow, you vanquish the monstrous foe, their lifeless form crumpling to the ground.\n",
-                $"As the dust settles, you stand victorious over the fallen beast, your {Weapon.ToLower()} stained with the creature's blood.\n",
-                "Your relentless courage pay off as you defeat the monster, a triumphant roar echoing through the battlefield.\n",
-                $"The monster lets out a final, defeated growl before succumbing to your might, leaving the {CurrentLocation} safe once more.\n"
+                $"With a final, determined blow, you vanquish the monstrous {monster.Type.ToLower()}, their lifeless form crumpling to the ground.\n",
+                $"As the dust settles, you stand victorious over the fallen {monster.Type.ToLower()}, your {Weapon.ToLower()} stained with the creature's blood.\n",
+                $"Your relentless courage pay off as you defeat the {monster.Type.ToLower()}, a triumphant roar echoing through the battlefield.\n",
+                $"The {monster.Type.ToLower()} lets out a final, defeated growl before succumbing to your might, leaving the {CurrentLocation} safe once more.\n"
                 };
             
             // Returns a random phrase from 0 to the length of the array (-1 as array.Length counts 0 as 1)
@@ -220,14 +309,14 @@ namespace FantasyConsoleGame.HeroClasses
         }
 
         // Returns a random battle death phrase
-        public string BattleDefeatPhrase()
+        public string BattleDefeatPhrase(Monster monster)
         {
             // Gets a random value to choose which of the 4 success phrases to return
             Random rnd = new Random();
 
             // Array of success phrases
             string[] battleDefeatPhrase = {
-                "Despite your valiant effort, you fall in battle, your life force extinguished by the relentless enemy.\n",
+                $"Despite your valiant effort, you fall in battle, your life force extinguished by the relentless {monster.Type.ToLower()}.\n",
                 "You fight bravely to the end but succumb to your injuries, a somber silence falling over the battlefield.\n",
                 "As the battle rages on, your strength wanes, and you collapse, your journey coming to a tragic end.\n",
                 "In the face of overwhelming odds, you meet your demise, your sacrifice not in vain but a heavy loss to the realm.\n"
@@ -235,6 +324,38 @@ namespace FantasyConsoleGame.HeroClasses
 
             // Returns a random phrase from 0 to the length of the array (-1 as array.Length counts 0 as 1)
             return battleDefeatPhrase[rnd.Next(0, battleDefeatPhrase.Length - 1)];
+        }
+
+        public void FleePhraseSuccess(Monster monster)
+        {
+            // Gets a random value to choose which of the 4 success phrases to return
+            Random rnd = new Random();
+
+            // Array of success phrases
+            string[] fleePhraseSuccess = {
+                $"With a burst of speed, you manage to break free from the battle and escape the pursuing {monster.Type.ToLower()}, leaving it behind in the dust.\n",
+                $"Your quick thinking and agility pay off as you successfully evade the {monster.Type.ToLower()}, disappearing into the safety of the wilderness\n",
+                $"In a desperate bid for escape, you find a hidden path and disappear into the dense underbrush, leaving the {monster.Type.ToLower()} bewildered and frustrated.\n",
+                $"With a final backward glance, you dash away from the battle, leaving the {monster.Type.ToLower()} behind, unable to catch up\n"
+                };
+
+            Console.WriteLine(fleePhraseSuccess[rnd.Next(0, fleePhraseSuccess.Length - 1)]);
+        }
+
+        public void FleePhraseFail(Monster monster)
+        {
+            // Gets a random value to choose which of the 4 success phrases to return
+            Random rnd = new Random();
+
+            // Array of fail phrases
+            string[] fleePhraseFail = {
+                $"Despite your hero's best efforts, the {monster.Type.ToLower()} proves too fast and persistent, preventing their escape.\n",
+                $"You attempt to flee but stumble, allowing the relentless {monster.Type.ToLower()} to catch up and continue the battle.\n",
+                $"In a heart-pounding moment, your escape attempt fails, and the pursuing {monster.Type.ToLower()} corners you, ready to strike.\n",
+                $"The {monster.Type.ToLower()} is unrelenting, and your desperate flee attempt ends in failure, with the creature closing in for another attack.\n"
+                };
+
+            Console.WriteLine(fleePhraseFail[rnd.Next(0,fleePhraseFail.Length - 1)]);
         }
 
 

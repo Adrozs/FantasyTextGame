@@ -36,46 +36,49 @@ namespace FantasyConsoleGame
                 "[2]: Wizard - 80  HP - 0  Armour - 8  Damage \n" +
                 "[3]: Shadow - 50  HP - 10 Armour - 12 Damage");
 
-            int heroSelection = int.Parse(Console.ReadLine());
+            // Ensures user enters a value between the two values 1-3. And saves user input to Misc.Choice 
+            Misc.EnsureCorrectChoice(1, 3);
 
-            if (heroSelection == 1) 
+            if (Misc.Choice == 1) 
             {
                 hero = new Knight();
             }
-            else if (heroSelection == 2)
+            else if (Misc.Choice == 2)
             {
                 hero = new Sorcerer();
             }
-            else if (heroSelection == 3) 
+            else if (Misc.Choice == 3) 
             {
                 hero = new Shadow();
             }
-            else
+            // Need an else at the bottom cause otherwise it complains that hero not guaranteed to not be null
+            else 
             {
-                Console.WriteLine("Invalid choice. Default hero, Knight has been chosen.");
                 hero = new Knight();
             }
-
                 
             //Change text color
             Console.ForegroundColor = ConsoleColor.DarkGreen;
             
             // Beginning story 
-            Console.WriteLine("You awaken in a serene clearing within a Forest. \n" +
+            Console.WriteLine(
+                "You awaken in a serene clearing within a Forest. \n" +
                 "Tall, ancient trees surround you, their leaves glistening with an otherworldly glow. \n" +
                 "The air is filled with a faint, magical hum.");
             Thread.Sleep(1000); // Wait 1 second
 
             Console.WriteLine("\nIt seems you have no recollection of who you are or what you were doing.");
-            Console.WriteLine($"You figure that you can't lay here all day. You gather yourself, pick up your {hero.Weapon} and look around.");
+            Console.WriteLine($"You figure that you can't lay here all day. You gather yourself, pick up your {hero.Weapon.ToLower()} and look around.");
 
 
             // Location 1 
-            Console.WriteLine("[1]: The road continues in front of you.\n" +
+            Console.WriteLine(
+                "[1]: The road continues in front of you.\n" +
                 "[2]: To the left you see a glen. \n" +
                 "[3]: On your right there's a marsh.");
 
-            Misc.Choice = int.Parse(Console.ReadLine());
+            // Ensures user enters a value between the two values 1-3. And saves user input to Misc.Choice 
+            Misc.EnsureCorrectChoice(1, 3);
 
             // Print continuation of the story depending on the users input and change location
             switch (Misc.Choice)
@@ -93,9 +96,6 @@ namespace FantasyConsoleGame
                         "\nThis area is shrouded in a dense, eerie fog that conceals what lies within. \nThe ground is damp and squelchy, and strange, glowing plants illuminate the way.");
                     hero.CurrentLocation = "marsh";
                     break;
-                default :
-                    Console.WriteLine("Invalid choice. Please choose [1], [2], [3]");
-                break;
             }
 
             // Initialize as false to ensure gameplay loop starts. When this is switched to false, game ends
@@ -109,12 +109,27 @@ namespace FantasyConsoleGame
             // Gameplay loop
             while (gameOver == false)
             {
-                // user gets choice to go left, right or forward ?
-                Console.WriteLine(
-                "[1]: Continue on the path in front of you.\n" +
-                "[2]: Venture to the left. \n" +
-                "[3]: Travel to your right");
-                Misc.Choice = int.Parse(Console.ReadLine());
+                // Loop this until user chooses something else than option 4
+                do
+                {
+                    // user gets choice to go left, right or forward ?
+                    Console.WriteLine(
+                    "[1]: Continue on the path in front of you.\n" +
+                    "[2]: Venture to the left. \n" +
+                    "[3]: Travel to your right \n" +
+                    "[4]: (See your stats) ");
+
+                    // Ensures user enters a value between the two values 1-4. 
+                    // Saves user input to Misc.Choice as well
+                    Misc.EnsureCorrectChoice(1, 4);
+
+                    // If user chooses option 4, print out all their stats
+                    if (Misc.Choice == 4)
+                    {
+                        hero.PrintAllStats();
+                    }
+
+                } while (Misc.Choice == 4);
 
                 // Randomize a location to go to and text comes up describing location
                 // Save current location to variable - OBS!!! Not sure what I'm gonna use CurrentLocation for yet?
@@ -139,6 +154,9 @@ namespace FantasyConsoleGame
                 // Need to implement game over text.
                 // Thinking just text that come out 1 sentence at a time with Thread.wait in between.
                 // something something your heroic journet come to an end, the evil won something something
+
+
+                // Add method that checks if xp is more than level requirement 
 
 
                 // Add xp, loot, items, levels, tavern/camp etc later.

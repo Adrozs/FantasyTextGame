@@ -12,7 +12,9 @@ namespace FantasyConsoleGame.MonsterClasses
         {
             //Base stats
             Type = "Ogre";
+            Level = 2;
             Hp = 70;
+            HpMax = Hp;
             Dmg = 12;
             HitChance = 50;
         }

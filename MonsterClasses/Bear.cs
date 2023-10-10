@@ -12,7 +12,9 @@ namespace FantasyConsoleGame.MonsterClasses
         {
             //Base stats
             Type = "Bear";
+            Level = 1;
             Hp = 30;
+            HpMax = Hp;
             Dmg = 5;
             HitChance = 35;
         }

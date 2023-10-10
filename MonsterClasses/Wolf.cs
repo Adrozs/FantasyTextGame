@@ -8,11 +8,13 @@ namespace FantasyConsoleGame.MonsterClasses
 {
     internal class Wolf : Monster
     {
-        internal Wolf()
+        internal Wolf() : base()
         {
             // Wolfs base stats
             Type = "Wolf";
+            Level = 1;
             Hp = 20;
+            HpMax = Hp;
             Dmg = 2;
             HitChance = 40;
         } 

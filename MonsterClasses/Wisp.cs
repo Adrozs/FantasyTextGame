@@ -13,6 +13,8 @@ namespace FantasyConsoleGame.MonsterClasses
             //Base stats
             Type = "Wisp";
             Hp = 25;
+            Level = 2;
+            HpMax = Hp;
             Dmg = 2;
             HitChance = 90;
         }

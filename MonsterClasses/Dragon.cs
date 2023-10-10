@@ -13,6 +13,8 @@ namespace FantasyConsoleGame.MonsterClasses
             //Base stats
             Type = "Dragon";
             Hp = 100;
+            Level = 4;
+            HpMax = Hp;
             Dmg = 25;
             HitChance = 80;
         }

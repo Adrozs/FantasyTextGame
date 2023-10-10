@@ -13,6 +13,8 @@ namespace FantasyConsoleGame.MonsterClasses
             //Base stats
             Type = "Goblin";
             Hp = 50;
+            Level = 2;
+            HpMax = Hp;
             Dmg = 12;
             HitChance = 50;
         }
