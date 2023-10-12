@@ -15,8 +15,13 @@ namespace FantasyConsoleGame
         static void Main(string[] args)
         {
 
-            // Play background music
-            Misc.PlayAudio(Misc.BackgroundMusic);       
+            // Create a audioPlayer to handle sounds and music
+            AudioPlayer audioPlayer = new AudioPlayer();
+
+            // Play intro background music
+            audioPlayer.PlayAudio("Intro");
+
+
 
 
             // Have to create hero as null, otherwise program wont compile cause it can't ensure that hero will be created
@@ -109,8 +114,15 @@ namespace FantasyConsoleGame
 
             // First battle before gamplay loop starts is forced
             Monster firstMonster = new Wolf();
+
+            audioPlayer.StopAudio(); // Stops background music from playing so battle music can start
+
+            //
             gameOver = firstMonster.MonsterEncounter(hero, firstMonster);
 
+            // Player didn't die in first battle play background music 
+            if (gameOver == false)
+                audioPlayer.PlayAudio("Journey", true);
 
             // Gameplay loop
             while (gameOver == false)
@@ -145,11 +157,17 @@ namespace FantasyConsoleGame
                 // Checks if there should be a battle, 65% chance for it to happen.
                 if (Misc.BattleChance() == true)
                 {
+                    audioPlayer.StopAudio();
+
                     // Chooses a random monster based on spawn rates
                     // Uses that monster to start an encounter
                     // Encounter returns true if hero died and false if monster died - gameplay loop continues until hero dies
                     Monster monster = Monster.MonsterSelector(hero.Level);
                     gameOver = monster.MonsterEncounter(hero, monster);
+
+                    // Player didn't die in battle, play background music again
+                    if (gameOver == false)
+                        audioPlayer.PlayAudio("Journey", true);
                 }
 
                 // After battle

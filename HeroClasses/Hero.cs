@@ -131,10 +131,45 @@ namespace FantasyConsoleGame.HeroClasses
         // Put this in hero class
         public void PrintAllStats()
         {
-            //Change text color to dark gray (info color)
             Console.ForegroundColor = ConsoleColor.DarkGray;
 
-            Console.WriteLine($"Level: {Level} \nXp: {Xp} \nHealth: {Hp} \nArmour: {Armour} \nDamage: {Dmg}");
+            Console.WriteLine();
+            Console.WriteLine("{---Stats---}");
+                        
+            Console.Write("Level: ");
+            Console.ForegroundColor = ConsoleColor.Gray;
+            Console.Write(Level);
+            Console.WriteLine();
+
+            Console.ForegroundColor = ConsoleColor.DarkYellow;
+            Console.Write("Xp: ");
+            Console.ForegroundColor = ConsoleColor.Yellow;
+            Console.Write(Xp);
+            Console.WriteLine();
+
+            Console.ForegroundColor = ConsoleColor.DarkGreen;
+            Console.Write("Health: ");
+            Console.ForegroundColor = ConsoleColor.Green;
+            Console.Write(Hp);
+            Console.WriteLine();
+
+            Console.ForegroundColor = ConsoleColor.DarkCyan;
+            Console.Write("Armour: ");
+            Console.ForegroundColor = ConsoleColor.Cyan;
+            Console.Write(Armour);
+            Console.WriteLine();
+
+            Console.ForegroundColor = ConsoleColor.DarkRed;
+            Console.Write("Damage: ");
+            Console.ForegroundColor = ConsoleColor.Red;
+            Console.Write(Dmg);
+            Console.WriteLine();
+
+
+            Console.ForegroundColor = ConsoleColor.DarkGray;
+            Console.WriteLine("------------");
+
+
             Thread.Sleep(1000); // Waits 1 second
 
             //Change back text color (adventure color)
@@ -144,8 +179,9 @@ namespace FantasyConsoleGame.HeroClasses
         // Prints hero's stats for the battles, only hp and dmg
         public void PrintBattleStats()
         {
-
-            Console.WriteLine($"You: | Health: {Hp}/{HpMax} | Damage: {Dmg} |");
+            Console.Write($"You: | Health: {Hp}/{HpMax} | Damage: {Dmg} |");
+            Console.BackgroundColor = ConsoleColor.Black; // Reset background color to black - needed to do this before printing new line otherwise color messes up on next row
+            Console.WriteLine(); // Print new line
         }
 
         // Returns how big chance player has to run from an enemy based on a formula (CHANGE THIS, bad calculation)
@@ -291,25 +327,27 @@ namespace FantasyConsoleGame.HeroClasses
         }
 
         // Returns a random battle victory phrase
-        public string BattleWonPhrase(Monster monster)
+        public void BattleWonPhrase(Monster monster)
         {
             // Gets a random value to choose which of the 4 success phrases to return
             Random rnd = new Random();
 
             // Array of success phrases
             string[] battleWonPhrase = {
-                $"With a final, determined blow, you vanquish the monstrous {monster.Type.ToLower()}, their lifeless form crumpling to the ground.\n",
-                $"As the dust settles, you stand victorious over the fallen {monster.Type.ToLower()}, your {Weapon.ToLower()} stained with the creature's blood.\n",
-                $"Your relentless courage pay off as you defeat the {monster.Type.ToLower()}, a triumphant roar echoing through the battlefield.\n",
-                $"The {monster.Type.ToLower()} lets out a final, defeated growl before succumbing to your might, leaving the {CurrentLocation} safe once more.\n"
+                $"With a final, determined blow, you vanquish the monstrous {monster.Type.ToLower()}, their lifeless form crumpling to the ground.",
+                $"As the dust settles, you stand victorious over the fallen {monster.Type.ToLower()}, your {Weapon.ToLower()} stained with the creature's blood.",
+                $"Your relentless courage pay off as you defeat the {monster.Type.ToLower()}, a triumphant roar echoing through the battlefield.",
+                $"The {monster.Type.ToLower()} lets out a final, defeated growl before succumbing to your might, leaving the {CurrentLocation} safe once more."
                 };
-            
+
             // Returns a random phrase from 0 to the length of the array (-1 as array.Length counts 0 as 1)
-            return battleWonPhrase[rnd.Next(0, battleWonPhrase.Length - 1)];
+            Console.Write(battleWonPhrase[rnd.Next(0, battleWonPhrase.Length - 1)]);
+            Console.BackgroundColor = ConsoleColor.Black; // Changes color back to black before new line, otherwise color bleeds to next row
+            Console.WriteLine();
         }
 
         // Returns a random battle death phrase
-        public string BattleDefeatPhrase(Monster monster)
+        public void BattleDefeatPhrase(Monster monster)
         {
             // Gets a random value to choose which of the 4 success phrases to return
             Random rnd = new Random();
@@ -323,7 +361,9 @@ namespace FantasyConsoleGame.HeroClasses
                 };
 
             // Returns a random phrase from 0 to the length of the array (-1 as array.Length counts 0 as 1)
-            return battleDefeatPhrase[rnd.Next(0, battleDefeatPhrase.Length - 1)];
+            Console.Write(battleDefeatPhrase[rnd.Next(0, battleDefeatPhrase.Length - 1)]);
+            Console.BackgroundColor = ConsoleColor.Black; // Changes color back to black before new line, otherwise color bleeds to next row
+            Console.WriteLine();
         }
 
         public void FleePhraseSuccess(Monster monster)
