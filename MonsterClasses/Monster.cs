@@ -24,8 +24,12 @@ namespace FantasyConsoleGame.MonsterClasses
         // Monster battle
         public bool MonsterEncounter(Hero hero, Monster monster)
         {
+            // Play battle music
+            Misc.PlayAudio(Misc.BackgroundMusic);
+
             // Change to dark red (battle color)
             Console.ForegroundColor = ConsoleColor.DarkRed;
+
 
             // Set battle mode to true
             Battle = true;

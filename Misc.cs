@@ -1,4 +1,5 @@
-﻿using System;
+﻿using NAudio.Wave;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -8,6 +9,36 @@ namespace FantasyConsoleGame
 {
     static public class Misc
     {
+        // Saves audio files in variables to make code more legible
+        public static string BackgroundMusic = @"C:\Users\adria\source\repos\FantasyTextGameV2\bin\SoundFiles\BackgroundMusic.wav";
+        public static string BattleMusic = @"C:\Users\adria\source\repos\FantasyTextGameV2\bin\SoundFiles\BattleMusic.mp3";
+        public static string DamageSFX = @"C:\Users\adria\source\repos\FantasyTextGameV2\bin\SoundFiles\Damage.wav";
+        public static string SelectSFX = @"C:\Users\adria\source\repos\FantasyTextGameV2\bin\SoundFiles\Select.wav";
+
+        // Plays audio at selected file location
+        public static async Task PlayAudio(string filePath)
+        {
+            try
+            {
+                using (WaveFileReader reader = new WaveFileReader(filePath))
+                {
+                    using (WaveOutEvent waveOut = new WaveOutEvent())
+                    {
+                        waveOut.Init(reader);
+                        waveOut.Play();
+                        while (waveOut.PlaybackState == PlaybackState.Playing)
+                        {
+                            await Task.Delay(100);
+                        }
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"Error occurred while playing audio: {ex.Message}");
+            }
+        }
+
         // Used to temporarily log users inputted choices
         public static int Choice {  get; set; }
 
@@ -43,7 +74,9 @@ namespace FantasyConsoleGame
             // Continue the loop to re-promt user for input until correct value is entered
             do
             {
+
                 string userInput = Console.ReadLine(); // Takes in users input
+                Misc.PlayAudio(Misc.SelectSFX);
 
                 if (int.TryParse(userInput, out userChoice))
                 {
@@ -67,6 +100,5 @@ namespace FantasyConsoleGame
             }
             while (isVaildChoice == false);
         }
-
     }
 }

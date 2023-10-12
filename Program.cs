@@ -4,14 +4,21 @@ using System.Runtime.InteropServices;
 using System.Threading;
 using FantasyConsoleGame.HeroClasses;
 using FantasyConsoleGame.MonsterClasses;
+using NAudio.Wave;
 
 namespace FantasyConsoleGame
 {
+
     internal class Program
     {
+
         static void Main(string[] args)
         {
-            
+
+            // Play background music
+            Misc.PlayAudio(Misc.BackgroundMusic);       
+
+
             // Have to create hero as null, otherwise program wont compile cause it can't ensure that hero will be created
             Hero hero;
 
@@ -27,7 +34,6 @@ namespace FantasyConsoleGame
             //Thread.Sleep(2000); // Waits 2 seconds 
             //Console.WriteLine("(faint whisper) \"A dangerous journey awaits you\"\n");
             //Thread.Sleep(2200); // Waits 2,2 seconds 
-
 
             // Choose hero
             Console.WriteLine("Who are you?");
@@ -47,7 +53,7 @@ namespace FantasyConsoleGame
             {
                 hero = new Sorcerer();
             }
-            else if (Misc.Choice == 3) 
+            else if (Misc.Choice == 3)  
             {
                 hero = new Shadow();
             }
@@ -164,9 +170,6 @@ namespace FantasyConsoleGame
 
 
 
-        }
-
-
-       
+        }       
     }
 }
