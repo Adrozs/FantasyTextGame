@@ -168,7 +168,8 @@ namespace FantasyConsoleGame.MonsterClasses
 
                     Thread.Sleep(1500); // Waits 1,5 seconds
 
-
+                    // Prints out how much xp was gained with some highlighted text
+                    // GainXp calculates how much xp hero gains
                     Console.ForegroundColor = ConsoleColor.DarkYellow; // Changes text color 
                     Console.Write("You gained ");
 
@@ -178,13 +179,12 @@ namespace FantasyConsoleGame.MonsterClasses
                     Console.ForegroundColor = ConsoleColor.DarkYellow; // Changes text color back
                     Console.WriteLine(" xp! \n");
 
-
-                    Battle = false;
-
                     //Change text color to adventure
                     Misc.ChangeTextColor("Adventure");
 
                     Thread.Sleep(2000); // Wait for audio to finnish playing
+
+                    Battle = false; // Battle is over
 
                     // returns false - as in game is not over, gameOver is false.
                     return false;
@@ -275,11 +275,11 @@ namespace FantasyConsoleGame.MonsterClasses
 
             // Array of success phrases
             string[] attackPhrase = {
-                "The monstrous foe's attack lands with brutal force, striking you and causing significant damage.",
-                "The enemy's strike finds its mark, leaving you wounded and vulnerable.",
-                $"With a menacing growl, the {monster.Type}'s claws find purchase, inflicting a painful blow on you.",
-                "The monstrous creature's attack connects, and you reel from the impact.",
-                "The enemy's assault is relentless, and you are unable to evade the attack, taking damage."
+                $"The {monster.Type.ToLower()}'s attack lands with brutal force, striking you and causing significant damage.",
+                $"The {monster.Type.ToLower()}'s strike finds its mark, leaving you wounded and vulnerable.",
+                $"With a menacing growl, the {monster.Type.ToLower()}'s claws find purchase, inflicting a painful blow on you.",
+                $"The {monster.Type.ToLower()}'s attack connects, and you reel from the impact.",
+                $"The {monster.Type.ToLower()}'s assault is relentless, and you are unable to evade the attack, taking damage."
                 };
 
             return attackPhrase[rnd.Next(0, 4)];
@@ -293,7 +293,7 @@ namespace FantasyConsoleGame.MonsterClasses
 
             // Array of success phrases
             string[] attackPhrase = {
-                "The monstrous creature's attack misses its target, leaving your hero unharmed.",
+                $"The {monster.Type.ToLower()}'s attack misses its target, leaving your hero unharmed.",
                 $"You skillfully dodge the {monster.Type.ToLower()}'s strike, avoiding any damage.",
                 $"The {monster.Type.ToLower()}'s attack goes wide, and you remain untouched by the assault.",
                 $"Despite the {monster.Type.ToLower()}'s efforts, you manage to parry the blow, preventing any damage.",

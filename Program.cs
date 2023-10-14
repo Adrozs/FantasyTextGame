@@ -18,12 +18,6 @@ namespace FantasyConsoleGame
             // Create a audioPlayer to handle sounds and music
             AudioPlayer audioPlayer = new AudioPlayer();
 
-            // Play intro background music
-            audioPlayer.PlayAudio("Intro");
-
-
-
-
             // Have to create hero as null, otherwise program wont compile cause it can't ensure that hero will be created
             Hero hero;
 
@@ -32,13 +26,20 @@ namespace FantasyConsoleGame
 
             // Intro (COMMENTED TO SKIP WHEN TESTING)
             //Console.WriteLine("(faint whisper) \"Hey...\"");
-            //Thread.Sleep(1500); // Waits 1,5 seconds 
-            //Console.WriteLine("(faint whisper) \"Hey you there\"");
-            //Thread.Sleep(1500); // Waits 1,5 seconds 
-            //Console.WriteLine("(faint whisper) \"It's time to wake up..\"");
             //Thread.Sleep(2000); // Waits 2 seconds 
-            //Console.WriteLine("(faint whisper) \"A dangerous journey awaits you\"\n");
+            //Console.WriteLine("(faint whisper) \"Hey you there\"");
+            //Thread.Sleep(2100); // Waits 2,1 seconds 
+            //Console.WriteLine("(faint whisper) \"It's time to wake up..\"");
             //Thread.Sleep(2200); // Waits 2,2 seconds 
+            //Console.WriteLine("(faint whisper) \"A dangerous journey awaits you\"\n");
+
+            //Thread.Sleep(1000); // Waits 1 second
+
+            // Play intro background music
+            audioPlayer.PlayAudio("Intro");
+
+            Thread.Sleep(1500); // Waits 1,5 seconds 
+
 
             // Choose hero
             Console.WriteLine("Who are you?");
@@ -127,6 +128,17 @@ namespace FantasyConsoleGame
             // Gameplay loop
             while (gameOver == false)
             {
+
+
+                // Checks if hero's been at enough locations (5) for a rest event to trigger (tavern/camp)
+                Locations.TimeForRestCheck(hero);
+                
+                //ADDING THIS FOR GAMEPLAY TESTING REASONS - FORCES TOWN ENCOUNTER ON 1ST LOOP
+                hero.LocationsVisited = 5;
+
+                
+
+
                 // Loop this until user chooses something else than option 4
                 do
                 {
@@ -165,22 +177,38 @@ namespace FantasyConsoleGame
                     Monster monster = Monster.MonsterSelector(hero.Level);
                     gameOver = monster.MonsterEncounter(hero, monster);
 
-                    // Player didn't die in battle, play background music again
+                    // Player didn't die in battle, play background music again and repeat gameplay loop
                     if (gameOver == false)
                         audioPlayer.PlayAudio("Journey", true);
+                    // Else if Player did die in battle
+                    else if (gameOver == true)
+                    {
+                        Console.WriteLine("YOU DIED\n");
+                        Console.WriteLine("-GAME OVER SCREEN NOT IMPLEMENTED. \nTURN OFF GAME AND RE-OPEN TO PLAY AGAIN-");
+                        
+                        // Need to implement game over text.
+                        // Thinking just text that come out 1 sentence at a time with Thread.wait in between.
+                        // something something your heroic journet come to an end, the evil won something something
+                        // and dramatic music
+                    }
+
+                    // LevelUp() method HERE after battle
+                    // Call LevelUp method - should check if xp > required xp for next level 
+                    // Add method that checks if xp is more than level requirement and then LevelUp() which increases 
+                    // stats and removes how much that level required from hero.Xp (NOT RESET IT)
+
+
                 }
+                // If BattleChance() was false and no battle occured - high chance() to spawn a chest
+                
+                else
+                {
+                    // "You found a chest" it contained [random] amount of coins!
+                    // So that the hero can earn money to shop for new gear
 
-                // After battle
-                // if victory, continue.
-                // if dead, game over
-                // Repeat until game over.
-
-                // Need to implement game over text.
-                // Thinking just text that come out 1 sentence at a time with Thread.wait in between.
-                // something something your heroic journet come to an end, the evil won something something
-
-
-                // Add method that checks if xp is more than level requirement 
+                    // not implemented yet, just continue in code for now
+                    continue;
+                }
 
 
                 // Add xp, loot, items, levels, tavern/camp etc later.

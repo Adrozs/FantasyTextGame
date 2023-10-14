@@ -17,21 +17,6 @@ namespace FantasyConsoleGame.HeroClasses
         // tänker mig att allt bör vara public get med private set och att det sen får sina default värden
         // i constructorn
 
-        // lägg sen in alla phrases och attack metoder som har med heron att göra längre ner i klassen så håller
-        // vi allt på ett ställe
-
-        // Monster base class
-        // efter det så tänkte jag göra detsamma för monster klassen. Skapa då en monster klass bara
-
-        // Hero and Monster sub classes
-        // när allt det är klart så kan du antingen börja leka med att implementera alla 3 heros som subklasser
-        // eller kanske fler monster än "monster" la alla mina idéer i notion på olika monster. Subklasser på dom också
-
-        // Monster encounters
-        // Vissa monster som är lite svårare ska bara kunna mötas i högre level så när den gör en random check för
-        // vilket monster vi möter så kolla if level = x för att möta detta monster liksom ja du fattar.
-        // så man inte blir mosad på första encountern liksom xD
-
         // More locations
         // elller utöka spelet. Tänker mig att vi ber chat gpt bara göra massa locations som den gjorde igår
         // så kör vi bara att det helt är random. Lägg int typ 20 locations till att börja med som vi slumpar fram med en metod
@@ -66,6 +51,13 @@ namespace FantasyConsoleGame.HeroClasses
         // dom kan då droppas och köpas i shoppen. Svårare monster, högre chans att droppa bättre grejer.
         // Kan säkert be chatgpt lösa drop rates procenten åt oss.
 
+        // Inventory system
+        // Vill lägga till något form av inventory system. Kanske 10 platser totalt, weapon/armour räknas ej.
+        // Till en början iallafall sålänge det bara finns health potions så tänker jag en lista där vi lägger till
+        // 1 health potion och så kan man använda dom vid camp/tavern eller i battle som en action
+        // längre fram kanske man kan göra så att health potions kan stacka, typ 3-5st med hjälp av en stack?
+        // det är ju samma object så ordningen spelar ingen roll.
+
         // Level system
         // Sen också level systemet. Bara någon formula som är liksom health och dmg ökar med x varje level. Förmodligen
         // bra att det ökar exponentiellt alltså mer och mer ju högre level vi är inte bara en fast summa? men det får
@@ -84,17 +76,23 @@ namespace FantasyConsoleGame.HeroClasses
         // Ändra sen i PrintStats metoderna så att den skriver ut Hp/HpMax tex 83/100.
         // Ser 100ggr bättre och snyggare ut!
 
+        // ARMOUR
+        // increases dodge chance(?) but gets destroyed somehow
+
 
         // Hero variables
         public int Level { get; private set; }
         public int Xp { get; private set; }
-        public int Coin { get; set; }
         public int Hp { get; set; }
         public int HpMax { get; set; }
         public int Armour { get; set; }
         public int Dmg { get; set; }
+        
+        // Item variables
         public int WeaponDmg { get; set; }
-        public string Weapon { get; private set; }
+        public string Weapon { get; set; }
+        public int HealthPotions { get; set; }
+        public int Coin { get; set; }
 
         // Location variables
         public string CurrentLocation { get; set; }
@@ -167,7 +165,22 @@ namespace FantasyConsoleGame.HeroClasses
 
 
             Console.ForegroundColor = ConsoleColor.DarkGray;
-            Console.WriteLine("------------");
+            Console.WriteLine("---Items---");
+
+            Console.Write("Health Potions: ");
+            Console.ForegroundColor = ConsoleColor.Gray;
+            Console.Write(HealthPotions);
+            Console.WriteLine();
+
+            Console.ForegroundColor = ConsoleColor.DarkGray;
+            Console.Write("Coins: ");
+            Console.ForegroundColor = ConsoleColor.Gray;
+            Console.Write(Coin);
+            Console.WriteLine();
+
+
+            Console.ForegroundColor = ConsoleColor.DarkGray;
+            Console.WriteLine("-----------");
 
 
             Thread.Sleep(1000); // Waits 1 second
@@ -183,6 +196,8 @@ namespace FantasyConsoleGame.HeroClasses
             Console.BackgroundColor = ConsoleColor.Black; // Reset background color to black - needed to do this before printing new line otherwise color messes up on next row
             Console.WriteLine(); // Print new line
         }
+
+        // BATTLE METHODS
 
         // Returns how big chance player has to run from an enemy based on a formula (CHANGE THIS, bad calculation)
         public int FleeChance(Monster monster)
@@ -289,6 +304,7 @@ namespace FantasyConsoleGame.HeroClasses
             }
         }
 
+        // PHRASE METHODS
 
         // Returns a random successfull attack phrase
         public string AttackPhraseSuccess(Monster monster)

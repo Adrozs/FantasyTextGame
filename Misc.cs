@@ -28,7 +28,7 @@ namespace FantasyConsoleGame
         // Chooses randomly if there should be a battle. 65% chance for it to become a battle
         public static bool BattleChance()
         {
-            if (Chance() < 65)
+            if (Chance() < 45)
             {
                 return true;
             }

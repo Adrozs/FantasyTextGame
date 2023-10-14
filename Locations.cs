@@ -1,4 +1,5 @@
-﻿using System;
+﻿using FantasyConsoleGame.HeroClasses;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -51,6 +52,206 @@ namespace FantasyConsoleGame
             
             // Return the chosen locations name
             return locationName[number];
+        }
+
+        public static void TimeForRestCheck(Hero hero)
+        {
+            // If locations visited is divsable by 5, trigger tavern/camp method
+            if (hero.LocationsVisited % 5 == 0)
+            {
+                if (Misc.Chance() <= 52) // 52% chance to make camp
+                {
+                    // Camp method
+                    // Locations.GoToCamp(); // NOT IMPLEMENTED
+                }
+                else if (Misc.Chance() <= 98) // 46% chance to find the Town
+                {
+                    // Tavern method
+                    Locations.GoToTown(hero);
+                }
+                else // 2% chance 
+                {
+                    // Nothing happens
+                }
+            }
+        }
+
+        public static void GoToTown(Hero hero)
+        {
+            // Variable to make sure options continue to loop until user goes to sleep
+            bool dayOver = false;
+
+            // Town & Tavern description
+            Console.WriteLine("With the day's light waning, you notices a modest small town nestled nearby.");
+            Console.WriteLine("As you appeoach the town a warm glow spills from the windows of an inviting tavern,  its thatched roof and welcoming hearth exuding a sense of comfort and solace.");
+            Console.WriteLine("The soft glow of lanterns spills from the windows, promising a peaceful night's rest within its cozy rooms. ");
+            Console.WriteLine("The laughter of patrons and the strumming of a lute drift through the door, inviting you to take respite from your journey and enjoy the company of fellow travelers. \n");
+            // General store description
+            Console.WriteLine("Adjacent to the tavern,  an intricately carved sign swinging gently overhead catches your attention.");
+            Console.WriteLine("The sign reads \"General Store\". The scent of exotic spices and fine leather wafts from within, promising a treasure trove of goods.\n");
+
+            // Re-promt user every time they choose to see their stats (option 3) 
+            // So that they still can go between all locations
+            do
+            {   
+                // Town square
+                // Promt user with options
+                Console.WriteLine("[1]: Go to the Tavern");
+                Console.WriteLine("[2]: Go to the General Store");
+                Console.WriteLine("[3]: (See your stats) ");
+
+                // Ensures user chooses 1,2 or 3 and saves it in Misc.Choice
+                Misc.EnsureCorrectChoice(1, 3);
+
+                // Went inside Tavern
+                if (Misc.Choice == 1) 
+                {
+                        // Description of tavern's inside
+                        Console.WriteLine("Inside, the flickering light of candles dances on the rough-hewn walls, " +
+                            "\ncasting a cozy ambiance that beckons the hero to take a seat at one of the sturdy wooden tables. ");
+                        Console.WriteLine("The innkeeper gestures toward a menu. As if silently asking you what you would like to do.");
+                    
+                    // Re-promt user everytime they choose to see their stats
+                    do
+                    {
+                        // Promt user with options
+                        Console.WriteLine("[1]: [End day] Rest for the night (+25 HP)");
+                        Console.WriteLine("[2]: [10 Coins] Purchase a beer (-5 Health, +2 Damage for 3 encounters)");
+                        Console.WriteLine("[3]: Go backto the Town square");
+                        Console.WriteLine("[4]: (See your stats) ");
+
+                        // Ensures user chooses 1-4 and saves it in Misc.Choice
+                        Misc.EnsureCorrectChoice(1, 4);
+
+                        // User chose to end day and sleep
+                        if (Misc.Choice == 1)
+                        {
+                            // If hp gained from resting goes over max hp, then just set hp to max.
+                            if (hero.Hp + 25 > hero.HpMax)
+                            {
+                                hero.Hp = hero.HpMax;
+                            }
+                            // if not then just increase hp with the value
+                            else
+                            {
+                                hero.Hp += 25; // Increase hp with 25
+                            }
+
+                            // Day is over, break out of loop and continue the rest of the code
+                            dayOver = true;
+                            break;
+                        }
+                        // User chose to buy a beer
+                        else if (Misc.Choice == 2)
+                        {
+                            // Checks if hero has enough coin
+                            if (hero.Coin >= 10)
+                            {
+                                hero.Coin -= 10; // Remove 10 coin
+                                hero.Hp -= 5; // Decrease hp with 5
+                                //hero.DmgBoost += 2; // Increase temporary damage boost //NOT IMPLEMENTED - DECREASE NEED SOMETHING TO TRACK IT SO WE CAN REMOVE IT IN X ENCOUNTERS
+                            }
+                            else
+                            {
+                                Console.WriteLine("You don't have enough coin");
+                            }
+                        }
+                        // User went back to town square
+                        else if (Misc.Choice == 3)
+                        {
+                            continue; // do nothing and just continue the loop to re-promt user
+                        }
+                        // User chose to see their stats
+                        else if (Misc.Choice == 4)
+                        {
+                            // Prints out hero's stats
+                            hero.PrintAllStats();
+                            Console.WriteLine(); // New line
+                        }
+                    }
+                    while (Misc.Choice == 4);
+
+                }
+                // Went inside General Store
+                else if (Misc.Choice == 2) 
+                {
+                    // Description of General Store's inside
+                    //...
+                    //...
+
+                    // Re-promt user as long as they don't choose to go back to the Town square
+                    do
+                    {
+                        // Promt user with options
+                        Console.WriteLine("[1]: [15 Coins] Purchase Health Potion (+10 Health when used)");
+                        Console.WriteLine("[2]: [30 Coins] Purchase Weapon (+5 Damage)");
+                        Console.WriteLine("[3]: [20 Coins] Purchase Armour (???)");
+                        Console.WriteLine("[4]: Go back to the Town square");
+                        Console.WriteLine("[5]: (See your stats) ");
+
+                        // Ensures user chooses 1-5 and saves it in Misc.Choice
+                        Misc.EnsureCorrectChoice(1, 5);
+
+                        // User chose to buy health potion
+                        if (Misc.Choice == 1)
+                        {
+                            // Change so that this item no longer can be purchased. Perhaps so that It's not an option anymore
+                            // And it just says "sold out" or somehting
+
+                            hero.HealthPotions++; // Increase health potions with 1
+                            hero.Coin -= 15; // Remove coins
+                        }
+                        // User chose to buy the weapon
+                        else if (Misc.Choice == 2)
+                        {
+                            // Change so that this item no longer can be purchased. Perhaps so that It's not an option anymore
+                            // And it just says "sold out" or somehting
+
+                            hero.Coin -= 30; // Remove coin
+
+                            //hero.Weapon = ??? // figure out how to implement so that the it becomes weapon
+                            //hero.Dmg += hero.WeaponDmg ??
+
+                            // THIS IS TEMPORARY JUST TO DO SOMETHING WHILE HERE UNTIL ALL FEATURES IMPLEMENTED
+                            // WHEN CHANGING WEAPON IT SHOULD ADD "WeaponDmg" TO "Dmg" INSTEAD.
+                            hero.Dmg += 5;
+                        }
+                        // User chose to buy armour
+                        else if (Misc.Choice == 3)
+                        {
+                            // Change so that this item no longer can be purchased. Perhaps so that It's not an option anymore
+                            // And it just says "sold out" or somehting
+
+                            // Not really sure what armour should do yet..?
+                            Console.WriteLine("Not implemented armour yet lmao [Coming soon]");
+                        }
+                        // User went back to the town square
+                        else if (Misc.Choice == 4)
+                        {
+                            continue; // do nothing and just continue the loop to re-promt user from the town square
+                        }
+                        // User chose to see their stats
+                        else if (Misc.Choice == 5)
+                        {
+                            // Prints out hero's stats
+                            hero.PrintAllStats();
+                            Console.WriteLine(); // New line
+                        }
+                    }
+                    while (Misc.Choice != 4);
+
+                }
+                // Display stats
+                else
+                {
+                    // Prints out hero's stats
+                    hero.PrintAllStats();
+                    Console.WriteLine(); // New line
+                }
+            }
+            while (dayOver != true);
+
+            // Hero goes to sleep and story can continue with more encounters
 
             
 
