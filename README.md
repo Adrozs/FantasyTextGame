@@ -7,6 +7,12 @@ Mainly to practice with classes and just having fun with code.
 
 You take on the role as one of 3 adventurers. A Knight, A Sorcerer or the mysterious Shadow... To venture around in a fantasy world fighting various creatures and exploring the mysterious and magical world of name I haven't come up with yet.
 
+!--IMPORTANT IF YOU WANT SOUND EFFECTS TO WORK--!
+
+Download the Sound folder and add it to the repository folder. Example for me it is "C:\User\User\repos\FantasyConsoleGame\Sounds"
+
+Download link:
+https://drive.google.com/drive/folders/13KsfvRsf5fvSjXt8Psdn5q5qMzK6hkuQ?usp=share_link
 
 ---------------------------------------
 On my to-do list is the following:
