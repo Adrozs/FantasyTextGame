@@ -56,30 +56,36 @@ namespace FantasyConsoleGame
 
         public static void TimeForRestCheck(Hero hero)
         {
+
             // If locations visited is divsable by 5, trigger tavern/camp method
             if (hero.LocationsVisited % 5 == 0)
             {
-                if (Misc.Chance() <= 52) // 52% chance to make camp
-                {
-                    // Camp method
-                    // Locations.GoToCamp(); // NOT IMPLEMENTED
-                }
-                else if (Misc.Chance() <= 98) // 46% chance to find the Town
+                if (Misc.Chance() <= 55) // 55% chance to find the Town
                 {
                     // Tavern method
                     Locations.GoToTown(hero);
                 }
-                else // 2% chance 
+                else if (Misc.Chance() <= 99) // 45% chance to make camp
+                {
+                    // Camp method
+                    // Locations.GoToCamp(); // NOT IMPLEMENTED
+                }
+                else // 1% chance 
                 {
                     // Nothing happens
                 }
             }
+            Console.ForegroundColor = ConsoleColor.DarkGreen; // Change color back to adventure color
         }
 
         public static void GoToTown(Hero hero)
         {
+            // PLAY ANOTHER SOUND TRACK FOR THE TOWN
+
             // Variable to make sure options continue to loop until user goes to sleep
             bool dayOver = false;
+
+            Console.ForegroundColor = ConsoleColor.DarkYellow; // Change color to signify reaching the town
 
             // Town & Tavern description
             Console.WriteLine("With the day's light waning, you notices a modest small town nestled nearby.");
@@ -175,14 +181,22 @@ namespace FantasyConsoleGame
                 // Went inside General Store
                 else if (Misc.Choice == 2) 
                 {
+                    Console.ForegroundColor = ConsoleColor.DarkYellow; // Change to town color
+                   
                     // Description of General Store's inside
-                    //...
-                    //...
+                    Console.WriteLine("You enter the general store.."); // TEMP TEXT FLESH THIS OUT LATER
 
                     // Re-promt user as long as they don't choose to go back to the Town square
                     do
                     {
                         // Promt user with options
+                        Console.ForegroundColor = ConsoleColor.DarkGray; // Change to descriptive color
+                        Console.Write("Coins: ");
+                        Console.ForegroundColor = ConsoleColor.Gray; // Change to highlight amount of coins
+                        Console.WriteLine(hero.Coin);
+
+                        Console.ForegroundColor = ConsoleColor.DarkYellow; // Change to town color
+
                         Console.WriteLine("[1]: [15 Coins] Purchase Health Potion (+10 Health when used)");
                         Console.WriteLine("[2]: [30 Coins] Purchase Weapon (+5 Damage)");
                         Console.WriteLine("[3]: [20 Coins] Purchase Armour (???)");
@@ -200,6 +214,19 @@ namespace FantasyConsoleGame
 
                             hero.HealthPotions++; // Increase health potions with 1
                             hero.Coin -= 15; // Remove coins
+
+                            Console.ForegroundColor = ConsoleColor.DarkGray; // Change to descriptive color
+                            Console.Write("Health potions increased by ");
+                            Console.ForegroundColor = ConsoleColor.Green; // Change color to highlight number
+                            Console.WriteLine(1);
+
+                            Console.ForegroundColor = ConsoleColor.DarkGray; // Change to descriptive color
+                            Console.Write("Spent ");
+                            Console.ForegroundColor = ConsoleColor.Gray; // Change color to highlight amount
+                            Console.Write(15);
+                            Console.ForegroundColor = ConsoleColor.DarkGray; // Change to descriptive color
+                            Console.WriteLine(" coins");
+
                         }
                         // User chose to buy the weapon
                         else if (Misc.Choice == 2)
@@ -215,6 +242,11 @@ namespace FantasyConsoleGame
                             // THIS IS TEMPORARY JUST TO DO SOMETHING WHILE HERE UNTIL ALL FEATURES IMPLEMENTED
                             // WHEN CHANGING WEAPON IT SHOULD ADD "WeaponDmg" TO "Dmg" INSTEAD.
                             hero.Dmg += 5;
+
+                            Console.ForegroundColor = ConsoleColor.DarkGray; // Change to descriptive color
+                            Console.Write("Damage increased by ");
+                            Console.ForegroundColor = ConsoleColor.Red; // Change color to highlight damage
+                            Console.WriteLine(5);
                         }
                         // User chose to buy armour
                         else if (Misc.Choice == 3)

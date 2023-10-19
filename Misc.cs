@@ -25,10 +25,10 @@ namespace FantasyConsoleGame
             return rnd.Next(0, 100);
         }
 
-        // Chooses randomly if there should be a battle. 65% chance for it to become a battle
+        // Chooses randomly if there should be a battle. 40% chance for it to become a battle
         public static bool BattleChance()
         {
-            if (Chance() < 45)
+            if (Chance() < 40)
             {
                 return true;
             }

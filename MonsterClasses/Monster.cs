@@ -218,35 +218,35 @@ namespace FantasyConsoleGame.MonsterClasses
             // Set spawn value 
             int spawnValue = Misc.Chance();
 
-            // Initialize monster object
+            // Create monster object
             Monster monster;
 
             // Selects which monster to spawn based on the spawn rates and level requirement
-            if (spawnValue < 30 && heroLevel >= 1)
+            if (spawnValue < 30 && heroLevel >= 1) // (80% if level 1, 43% if level 2, 35% if level 3 & 30% if level 4)
             {
                 monster = new Wolf();
             }
-            else if (spawnValue < 50 && heroLevel >= 1)
+            else if (spawnValue < 50 && heroLevel >= 1) // 20%
             {
                 monster = new Bear();
             }
-            else if (spawnValue < 68 && heroLevel >= 1)
+            else if (spawnValue < 68 && heroLevel >= 1) // 18%
             {
                 monster = new Skeleton();
             }
-            else if (spawnValue < 75 && heroLevel >= 2)
+            else if (spawnValue < 75 && heroLevel >= 2) // 7%
             {
                 monster = new Wisp();
             }
-            else if (spawnValue < 87 && heroLevel >= 2)
+            else if (spawnValue < 87 && heroLevel >= 2) // 12%
             {
                 monster = new Goblin();
             }
-            else if (spawnValue < 95 && heroLevel >= 3)
+            else if (spawnValue < 95 && heroLevel >= 3) // 8%
             {
                 monster = new Ogre();
             }
-            else if (spawnValue >= 95 && heroLevel >= 4)
+            else if (spawnValue >= 95 && heroLevel >= 4) // 5%
             {
                 monster = new Dragon();
             }

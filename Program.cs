@@ -118,7 +118,6 @@ namespace FantasyConsoleGame
 
             audioPlayer.StopAudio(); // Stops background music from playing so battle music can start
 
-            //
             gameOver = firstMonster.MonsterEncounter(hero, firstMonster);
 
             // Player didn't die in first battle play background music 
@@ -129,15 +128,8 @@ namespace FantasyConsoleGame
             while (gameOver == false)
             {
 
-
-                // Checks if hero's been at enough locations (5) for a rest event to trigger (tavern/camp)
-                Locations.TimeForRestCheck(hero);
-                
-                //ADDING THIS FOR GAMEPLAY TESTING REASONS - FORCES TOWN ENCOUNTER ON 1ST LOOP
-                hero.LocationsVisited = 5;
-
-                
-
+                // Checks if hero's been at enough locations (5) for a possible rest event to trigger (tavern/camp)
+                Locations.TimeForRestCheck(hero);                
 
                 // Loop this until user chooses something else than option 4
                 do
