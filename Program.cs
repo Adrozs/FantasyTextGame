@@ -200,7 +200,6 @@ namespace FantasyConsoleGame
 
                 }
                 // If BattleChance() was false and no battle occured - high chance() to spawn a chest
-                
                 else
                 {
                     // "You found a chest" it contained [random] amount of coins!

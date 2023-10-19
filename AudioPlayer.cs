@@ -13,13 +13,19 @@ namespace FantasyConsoleGame
         private string currentAudio; // Added field to track the currently playing audio file
 
 
-        // Saves audio files in variables to make code more legible
+        //Ger file paths and save them in variables to make code more legible
 
-        //Music
-        private static string _soundDirectory = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "Sounds");
+        // Get project file path
+        private static string _projectPath = Directory.GetParent(Directory.GetParent(Directory.GetParent(Directory.GetCurrentDirectory())?.FullName)?.FullName)?.FullName;
+
+        // Get sound folder path
+        private static string _soundDirectory = Path.Combine(_projectPath, "Sounds");
+
+        //Get sound file paths 
+        
+        // Music
         private string _introMusic = Path.Combine(_soundDirectory, "BackgroundMusic.wav");
         private string _battleMusic = Path.Combine(_soundDirectory, "BattleMusic.wav");
-
         private string _titleTheme = Path.Combine(_soundDirectory, "TitleTheme.wav");
         private string _journeyBegins = Path.Combine(_soundDirectory, "JourneyBegins.wav");
         private string _icyCave = Path.Combine(_soundDirectory, "TheIcyCave.wav");
@@ -29,7 +35,6 @@ namespace FantasyConsoleGame
         private string _dungeon = Path.Combine(_soundDirectory, "MysteriousDungeon.wav");
         private string _battleMusic3 = Path.Combine(_soundDirectory, "DecisiveBattle.wav");
         private string _fantasy = Path.Combine(_soundDirectory, "TheFinalOfTheFantasy.wav");
-
 
         //SFX
         private string _heroHurtSFX = Path.Combine(_soundDirectory, "HeroHurtSFX.wav");
@@ -89,7 +94,8 @@ namespace FantasyConsoleGame
             // If we couldn't play audio, display error message
             catch (Exception ex)
             {
-                Console.WriteLine($"Error occurred while playing audio: {ex.Message}");
+                // Commented out error message if users haven't downloaded sound files - so they don't get error message when each sound is supposed to play
+                //Console.WriteLine($"Error occurred while playing audio: {ex.Message}");
             }
         }
 
