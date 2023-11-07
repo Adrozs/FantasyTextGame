@@ -123,7 +123,7 @@ namespace FantasyConsoleGame
                         // Promt user with options
                         Console.WriteLine("[1]: [End day] Rest for the night (+25 HP)");
                         Console.WriteLine("[2]: [10 Coins] Purchase a beer (-5 Health, +2 Damage for 3 encounters)");
-                        Console.WriteLine("[3]: Go backto the Town square");
+                        Console.WriteLine("[3]: Go back to the Town square");
                         Console.WriteLine("[4]: (See your stats) ");
 
                         // Ensures user chooses 1-4 and saves it in Misc.Choice
@@ -218,7 +218,6 @@ namespace FantasyConsoleGame
                         // Ensures user chooses 1-5 and saves it in Misc.Choice
                         Misc.EnsureCorrectChoice(1, 5);
 
-                        
 
                         // User chose to buy health potion
                         if (Misc.Choice == 1 && hpInStock)
