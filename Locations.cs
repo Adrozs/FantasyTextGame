@@ -205,7 +205,7 @@ namespace FantasyConsoleGame
 
                         // Weapon option
                         if (weaponInStock)
-                            Console.WriteLine($"[2]:  [{weapon.Price} Coins] Purchase {weapon.Name} (+{weapon.WeaponDmg} Damage)"); // Random weapon selected at the top of the method
+                            Console.WriteLine($"[2]: [{weapon.Price} Coins] Purchase {weapon.Name} (+{weapon.WeaponDmg} Damage)"); // Random weapon selected at the top of the method
                         else
                             Console.WriteLine("[2]: Weapon (Sold out)");
 
@@ -277,16 +277,19 @@ namespace FantasyConsoleGame
                                 Console.WriteLine("Not enough coin");
                         }
                         // User chose to buy armour
-                        else if (Misc.Choice == 3 && armourInStock)
+                        else if (Misc.Choice == 3)
                         {
-                            armourInStock = false; // Sets in stock to false so its no longer avalible to purchase
+                            // Checks if armour is in stock
+                            if (armourInStock)
+                            {
+                                // Sets in stock to false so its no longer avalible to purchase
+                                armourInStock = false; 
 
-                            // Not really sure what armour should do yet..?
-                            Console.WriteLine("Not implemented armour yet lmao [Coming soon]");
-                        }
-                        else if (Misc.Choice == 3 && !armourInStock)
-                        {
-                            Console.WriteLine("Armour is sold out");
+                                // Not really sure what armour should do yet..?
+                                Console.WriteLine("Not implemented armour yet [Coming soon]");
+                            }
+                            else
+                                Console.WriteLine("Armour is sold out");
                         }
                         // User went back to the town square
                         else if (Misc.Choice == 4)
@@ -300,6 +303,7 @@ namespace FantasyConsoleGame
                             hero.PrintAllStats();
                             Console.WriteLine(); // New line
                         }
+                        Thread.Sleep(1000); // Waits 1 second - otherwise text just scrolls too fast
                     }
                     while (Misc.Choice != 4);
 
