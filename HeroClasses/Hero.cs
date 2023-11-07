@@ -79,28 +79,32 @@ namespace FantasyConsoleGame.HeroClasses
         // ARMOUR
         // increases dodge chance(?) but gets destroyed somehow
 
-
         // Hero variables
+        private int _hp;
+        private int _dmg;
+
+
+        // Hero properties
         public int Level { get; private set; }
         public int Xp { get; private set; }
         
         // If we try to add more Hp than the max it just sets hp to max
         public int Hp 
-        { get { return Hp; } 
+        { get { return _hp; } 
             set 
             { 
-                if(Hp + value > HpMax) 
+                if(_hp + value > HpMax) 
                 {
-                    Hp = HpMax;
+                    _hp = HpMax;
                 } 
-                else { Hp = value;}
+                else { _hp = value;}
             } 
         }
         public int HpMax { get; set; }
         public int Armour { get; set; }
         
         // Adds weapon damage to the total damage when accessing Dmg
-        public int Dmg { get { return Dmg + WeaponDmg; } set { Dmg = value; } } 
+        public int Dmg { get { return _dmg + WeaponDmg; } set { _dmg = value; } } 
         
         // Item variables
         public int WeaponDmg { get; set; }
@@ -124,7 +128,7 @@ namespace FantasyConsoleGame.HeroClasses
             Coin = 45;
 
             // Combat values
-            Hp = 100;
+            _hp = 100;
             HpMax = Hp;
             Armour = 0;
             Dmg = 10;
@@ -206,7 +210,7 @@ namespace FantasyConsoleGame.HeroClasses
         // Prints hero's stats for the battles, only hp and dmg
         public void PrintBattleStats()
         {
-            Console.Write($"You: | Health: {Hp}/{HpMax} | Damage: {Dmg} |");
+            Console.Write($"You: | Health: {_hp}/{HpMax} | Damage: {_dmg} |");
             Console.BackgroundColor = ConsoleColor.Black; // Reset background color to black - needed to do this before printing new line otherwise color messes up on next row
             Console.WriteLine(); // Print new line
         }
@@ -216,7 +220,7 @@ namespace FantasyConsoleGame.HeroClasses
         // Returns how big chance player has to run from an enemy based on a formula (CHANGE THIS, bad calculation)
         public int FleeChance(Monster monster)
         {
-            int fleeChance = (Hp / monster.Hp) * 10;
+            int fleeChance = (_hp / monster.Hp) * 10;
 
             // If the chance to flee is more than 100, cap it at 100.
             if (fleeChance > 100)
