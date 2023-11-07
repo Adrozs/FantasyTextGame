@@ -220,60 +220,61 @@ namespace FantasyConsoleGame
                         // Ensures user chooses 1-5 and saves it in Misc.Choice
                         Misc.EnsureCorrectChoice(1, 5);
 
-
-                        // User chose to buy health potion
-                        if (Misc.Choice == 1 && hpInStock)
+                        if (Misc.Choice == 1)
                         {
-                            hpInStock = false; // Sets in stock to false so its no longer avalible to purchase
+                            // User chose to buy health potion
+                            if (hpInStock)
+                            {
+                                hpInStock = false; // Sets in stock to false so its no longer avalible to purchase
 
-                            hero.HealthPotions++; // Increase health potions with 1
-                            hero.Coin -= 15; // Remove coins
+                                hero.HealthPotions++; // Increase health potions with 1
+                                hero.Coin -= 15; // Remove coins
 
-                            Console.ForegroundColor = ConsoleColor.DarkGray; // Change to descriptive color
-                            Console.Write("Health potions increased by ");
-                            Console.ForegroundColor = ConsoleColor.Green; // Change color to highlight number
-                            Console.WriteLine(1);
+                                Console.ForegroundColor = ConsoleColor.DarkGray; // Change to descriptive color
+                                Console.Write("Health potions increased by ");
+                                Console.ForegroundColor = ConsoleColor.Green; // Change color to highlight number
+                                Console.WriteLine(1);
 
-                            Console.ForegroundColor = ConsoleColor.DarkGray; // Change to descriptive color
-                            Console.Write("Spent ");
-                            Console.ForegroundColor = ConsoleColor.Gray; // Change color to highlight amount
-                            Console.Write(15);
-                            Console.ForegroundColor = ConsoleColor.DarkGray; // Change to descriptive color
-                            Console.WriteLine(" coins");
+                                Console.ForegroundColor = ConsoleColor.DarkGray; // Change to descriptive color
+                                Console.Write("Spent ");
+                                Console.ForegroundColor = ConsoleColor.Gray; // Change color to highlight amount
+                                Console.Write(15);
+                                Console.ForegroundColor = ConsoleColor.DarkGray; // Change to descriptive color
+                                Console.WriteLine(" coins");
 
-                        }
-                        else if (Misc.Choice == 1 && !hpInStock)
-                        {
-                            Console.WriteLine("Health Potions are sold out");
+                            }
+                            else
+                                Console.WriteLine("Health Potions are sold out");
                         }
                         // User chose to buy the weapon
-                        else if (Misc.Choice == 2 && weaponInStock && hero.Coin > weapon.Price)
+                        else if (Misc.Choice == 2)
                         {
-                            weaponInStock = false; // Sets in stock to false so its no longer avalible to purchase
+                            // Checks if hero has enough coin
+                            if (hero.Coin >= weapon.Price)
+                            {
+                                // Checks if weapon is in stock
+                                if (weaponInStock)
+                                {
+                                    // Sets in stock to false so its no longer avalible to purchase
+                                    weaponInStock = false; 
 
-                            hero.Coin -= 30; // Remove coin
+                                    // Removes coin from hero
+                                    hero.Coin -= weapon.Price; 
+                                    
+                                    // Change hero weapon name and damage
+                                    hero.Weapon = weapon.Name;
+                                    hero.WeaponDmg = weapon.WeaponDmg;
 
-                            //hero.Weapon = ??? // figure out how to implement so that the it becomes weapon
-                            //hero.Dmg += hero.WeaponDmg ??
-
-                            // THIS IS TEMPORARY JUST TO DO SOMETHING WHILE HERE UNTIL ALL FEATURES IMPLEMENTED
-                            // WHEN CHANGING WEAPON IT SHOULD ADD "WeaponDmg" TO "Dmg" INSTEAD.
-                            hero.Dmg += 5;
-
-
-                            //Random rnd = new Random();
-                            //int weaponIndex = rnd.Next(0, Loot.weaponList.Count);
-
-                            //Weapon weapon = Loot.weaponList[weaponIndex];
-
-                            Console.WriteLine($"{weapon.Name} {weapon.WeaponDmg} Damage [{weapon.Price} Coins]");
-
-
-
-                            Console.ForegroundColor = ConsoleColor.DarkGray; // Change to descriptive color
-                            Console.Write("Damage increased by ");
-                            Console.ForegroundColor = ConsoleColor.Red; // Change color to highlight damage
-                            Console.WriteLine(5);
+                                    Console.ForegroundColor = ConsoleColor.DarkGray; // Change to descriptive color
+                                    Console.Write("Weapon damage increased by ");
+                                    Console.ForegroundColor = ConsoleColor.Red; // Change color to highlight damage
+                                    Console.WriteLine(weapon.WeaponDmg);
+                                }
+                                else
+                                    Console.WriteLine("Not in stock");
+                            }
+                            else
+                                Console.WriteLine("Not enough coin");
                         }
                         // User chose to buy armour
                         else if (Misc.Choice == 3 && armourInStock)
