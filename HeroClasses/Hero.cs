@@ -83,10 +83,24 @@ namespace FantasyConsoleGame.HeroClasses
         // Hero variables
         public int Level { get; private set; }
         public int Xp { get; private set; }
-        public int Hp { get; set; }
+        
+        // If we try to add more Hp than the max it just sets hp to max
+        public int Hp 
+        { get { return Hp; } 
+            set 
+            { 
+                if(Hp + value > HpMax) 
+                {
+                    Hp = HpMax;
+                } 
+                else { Hp = value;}
+            } 
+        }
         public int HpMax { get; set; }
         public int Armour { get; set; }
-        public int Dmg { get; set; }
+        
+        // Adds weapon damage to the total damage when accessing Dmg
+        public int Dmg { get { return Dmg + WeaponDmg; } set { Dmg = value; } } 
         
         // Item variables
         public int WeaponDmg { get; set; }
