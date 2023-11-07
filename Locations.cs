@@ -132,16 +132,8 @@ namespace FantasyConsoleGame
                         // User chose to end day and sleep
                         if (Misc.Choice == 1)
                         {
-                            // If hp gained from resting goes over max hp, then just set hp to max. // !!! Replace this with method or getters setters later
-                            if (hero.Hp + 25 > hero.HpMax)
-                            {
-                                hero.Hp = hero.HpMax;
-                            }
-                            // if not then just increase hp with the value
-                            else
-                            {
-                                hero.Hp += 25; // Increase hp with 25
-                            }
+                            // Add 25 to hero's hp
+                            hero.Hp += 25;
 
                             // Day is over, break out of loop and continue the rest of the code
                             dayOver = true;
