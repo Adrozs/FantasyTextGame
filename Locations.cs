@@ -132,7 +132,7 @@ namespace FantasyConsoleGame
                         // User chose to end day and sleep
                         if (Misc.Choice == 1)
                         {
-                            // If hp gained from resting goes over max hp, then just set hp to max.
+                            // If hp gained from resting goes over max hp, then just set hp to max. // !!! Replace this with method or getters setters later
                             if (hero.Hp + 25 > hero.HpMax)
                             {
                                 hero.Hp = hero.HpMax;
@@ -184,11 +184,17 @@ namespace FantasyConsoleGame
                     Console.ForegroundColor = ConsoleColor.DarkYellow; // Change to town color
                    
                     // Description of General Store's inside
-                    Console.WriteLine("You enter the general store.."); // TEMP TEXT FLESH THIS OUT LATER
+                    Console.WriteLine("You enter the general store.."); // TEMP TEXT, FLESH THIS OUT LATER
 
                     // Re-promt user as long as they don't choose to go back to the Town square
                     do
                     {
+                        // Declare bools to be able to set items to sold out an no longer avalible if purchased
+                        bool hpInStock = true;
+                        bool weaponInStock = true;
+                        bool armourInStock = true;
+
+
                         // Promt user with options
                         Console.ForegroundColor = ConsoleColor.DarkGray; // Change to descriptive color
                         Console.Write("Coins: ");
@@ -197,20 +203,35 @@ namespace FantasyConsoleGame
 
                         Console.ForegroundColor = ConsoleColor.DarkYellow; // Change to town color
 
-                        Console.WriteLine("[1]: [15 Coins] Purchase Health Potion (+10 Health when used)");
-                        Console.WriteLine("[2]: [30 Coins] Purchase Weapon (+5 Damage)");
-                        Console.WriteLine("[3]: [20 Coins] Purchase Armour (???)");
+                        // Health potion option
+                        if (hpInStock)
+                            Console.WriteLine("[1]: [15 Coins] Purchase Health Potion (+10 Health when used)");
+                        else
+                            Console.WriteLine("[1]: Health Potion (Sold out)");
+
+                        // Weapon option
+                        if (weaponInStock)
+                            Console.WriteLine("[2]: [30 Coins] Purchase Weapon (+5 Damage)");
+                        else
+                            Console.WriteLine("[2]: Weapon (Sold out)");
+
+                        if (armourInStock)
+                            Console.WriteLine("[3]: [20 Coins] Purchase Armour (???)");
+                        else
+                            Console.WriteLine("[3]: Armour (Sold out)");
+
                         Console.WriteLine("[4]: Go back to the Town square");
                         Console.WriteLine("[5]: (See your stats) ");
 
                         // Ensures user chooses 1-5 and saves it in Misc.Choice
                         Misc.EnsureCorrectChoice(1, 5);
 
+                        
+
                         // User chose to buy health potion
-                        if (Misc.Choice == 1)
+                        if (Misc.Choice == 1 && hpInStock)
                         {
-                            // Change so that this item no longer can be purchased. Perhaps so that It's not an option anymore
-                            // And it just says "sold out" or somehting
+                            hpInStock = false; // Sets in stock to false so its no longer avalible to purchase
 
                             hero.HealthPotions++; // Increase health potions with 1
                             hero.Coin -= 15; // Remove coins
@@ -228,11 +249,14 @@ namespace FantasyConsoleGame
                             Console.WriteLine(" coins");
 
                         }
-                        // User chose to buy the weapon
-                        else if (Misc.Choice == 2)
+                        else if (Misc.Choice == 1 && !hpInStock)
                         {
-                            // Change so that this item no longer can be purchased. Perhaps so that It's not an option anymore
-                            // And it just says "sold out" or somehting
+                            Console.WriteLine("Health Potions are sold out");
+                        }
+                        // User chose to buy the weapon
+                        else if (Misc.Choice == 2 && weaponInStock)
+                        {
+                            weaponInStock = false; // Sets in stock to false so its no longer avalible to purchase
 
                             hero.Coin -= 30; // Remove coin
 
@@ -248,14 +272,21 @@ namespace FantasyConsoleGame
                             Console.ForegroundColor = ConsoleColor.Red; // Change color to highlight damage
                             Console.WriteLine(5);
                         }
-                        // User chose to buy armour
-                        else if (Misc.Choice == 3)
+                        else if (Misc.Choice == 2 && !weaponInStock)
                         {
-                            // Change so that this item no longer can be purchased. Perhaps so that It's not an option anymore
-                            // And it just says "sold out" or somehting
+                            Console.WriteLine("Weapons are sold out");
+                        }
+                        // User chose to buy armour
+                        else if (Misc.Choice == 3 && armourInStock)
+                        {
+                            armourInStock = false; // Sets in stock to false so its no longer avalible to purchase
 
                             // Not really sure what armour should do yet..?
                             Console.WriteLine("Not implemented armour yet lmao [Coming soon]");
+                        }
+                        else if (Misc.Choice == 3 && !armourInStock)
+                        {
+                            Console.WriteLine("Armour is sold out");
                         }
                         // User went back to the town square
                         else if (Misc.Choice == 4)
