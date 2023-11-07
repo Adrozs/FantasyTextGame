@@ -85,6 +85,9 @@ namespace FantasyConsoleGame
             // Variable to make sure options continue to loop until user goes to sleep
             bool dayOver = false;
 
+            // Selects a random weapon for this encounter - avalible to purchase in the General Store
+            Weapon weapon = Loot.ChooseRandomWeapon();
+
             Console.ForegroundColor = ConsoleColor.DarkYellow; // Change color to signify reaching the town
 
             // Town & Tavern description
@@ -178,15 +181,14 @@ namespace FantasyConsoleGame
                     // Description of General Store's inside
                     Console.WriteLine("You enter the general store.."); // TEMP TEXT, FLESH THIS OUT LATER
 
+                    // Declare bools to be able to set items to sold out an no longer avalible if purchased
+                    bool hpInStock = true;
+                    bool weaponInStock = true;
+                    bool armourInStock = true;
+
                     // Re-promt user as long as they don't choose to go back to the Town square
                     do
                     {
-                        // Declare bools to be able to set items to sold out an no longer avalible if purchased
-                        bool hpInStock = true;
-                        bool weaponInStock = true;
-                        bool armourInStock = true;
-
-
                         // Promt user with options
                         Console.ForegroundColor = ConsoleColor.DarkGray; // Change to descriptive color
                         Console.Write("Coins: ");
@@ -203,7 +205,7 @@ namespace FantasyConsoleGame
 
                         // Weapon option
                         if (weaponInStock)
-                            Console.WriteLine("[2]: [30 Coins] Purchase Weapon (+5 Damage)");
+                            Console.WriteLine($"[2]:  [{weapon.Price} Coins] Purchase {weapon.Name} (+{weapon.WeaponDmg} Damage)"); // Random weapon selected at the top of the method
                         else
                             Console.WriteLine("[2]: Weapon (Sold out)");
 
@@ -245,7 +247,7 @@ namespace FantasyConsoleGame
                             Console.WriteLine("Health Potions are sold out");
                         }
                         // User chose to buy the weapon
-                        else if (Misc.Choice == 2 && weaponInStock)
+                        else if (Misc.Choice == 2 && weaponInStock && hero.Coin > weapon.Price)
                         {
                             weaponInStock = false; // Sets in stock to false so its no longer avalible to purchase
 
@@ -258,14 +260,20 @@ namespace FantasyConsoleGame
                             // WHEN CHANGING WEAPON IT SHOULD ADD "WeaponDmg" TO "Dmg" INSTEAD.
                             hero.Dmg += 5;
 
+
+                            //Random rnd = new Random();
+                            //int weaponIndex = rnd.Next(0, Loot.weaponList.Count);
+
+                            //Weapon weapon = Loot.weaponList[weaponIndex];
+
+                            Console.WriteLine($"{weapon.Name} {weapon.WeaponDmg} Damage [{weapon.Price} Coins]");
+
+
+
                             Console.ForegroundColor = ConsoleColor.DarkGray; // Change to descriptive color
                             Console.Write("Damage increased by ");
                             Console.ForegroundColor = ConsoleColor.Red; // Change color to highlight damage
                             Console.WriteLine(5);
-                        }
-                        else if (Misc.Choice == 2 && !weaponInStock)
-                        {
-                            Console.WriteLine("Weapons are sold out");
                         }
                         // User chose to buy armour
                         else if (Misc.Choice == 3 && armourInStock)
