@@ -22,42 +22,30 @@ namespace FantasyConsoleGame
         // change hero.Weapon if weapon is better than current hero.WeaponDmg 
 
 
-        // Create all the Knight's swords as objects with their name and damage
-        static Sword Thornblade = new Sword("Thornblade", 1);
-        static Sword Stormrender = new Sword("Stormrender", 2);
-        static Sword Frostfang = new Sword("Frostbringer", 3);
-        static Sword Umbra = new Sword("Umbra", 4);        
-        static Sword Goldbrand = new Sword("Goldbrand", 5);
-        static Sword Duskfang = new Sword("Duskfang", 6);
-        static Sword Dawnbreaker = new Sword("Dawnbreaker", 7);
-        static Sword Sunfire = new Sword("Sunfire", 8);
-        static Sword Soulreaver = new Sword("Soulreaver", 9);
-        static Sword Chillrend = new Sword("Chillrend", 10);
+        // Create all the Knight's swords as objects with their name, type, damage and price
+        static Weapon Thornblade = new Weapon("Thornblade", "Sword", 1, 5);
+        static Weapon Stormrender = new Weapon("Stormrender", "Sword", 2 ,13);
+        static Weapon Frostfang = new Weapon("Frostbringer", "Sword", 3, 21);
+        static Weapon Umbra = new Weapon("Umbra", "Sword", 4, 29);        
+        static Weapon Goldbrand = new Weapon("Goldbrand", "Sword", 5,37);
+        static Weapon Duskfang = new Weapon("Duskfang", "Sword", 6, 45);
+        static Weapon Dawnbreaker = new Weapon("Dawnbreaker", "Sword", 7, 53);
+        static Weapon Sunfire = new Weapon("Sunfire", "Sword", 8, 68);
+        static Weapon Soulreaver = new Weapon("Soulreaver", "Sword", 9, 76);
+        static Weapon Chillrend = new Weapon("Chillrend", "Sword", 10, 84);
 
-        // Create a list of swords
-        static List<Sword> swords = new List<Sword>();
+        // Create a list of all swords
+        static public List<Weapon> weaponList = new List<Weapon>() {
+            Thornblade, Stormrender, Frostfang, Umbra, Goldbrand, Duskfang, Dawnbreaker, Sunfire, Soulreaver, Chillrend};
 
-        // Constructor to initialize all the methods
-        static Loot()
+       
+        public static Weapon ChooseRandomWeapon()
         {
-            AddSwordsToList();
-        }
+            Random rnd = new Random();
+            int weaponIndex = rnd.Next(0, Loot.weaponList.Count);
 
-        // Adds all swords to its list
-        static void AddSwordsToList()
-        {
-            swords.Add(Thornblade);
-            swords.Add(Stormrender);
-            swords.Add(Frostfang);
-            swords.Add(Umbra);
-            swords.Add(Goldbrand);
-            swords.Add(Duskfang);
-            swords.Add(Dawnbreaker);
-            swords.Add(Sunfire);
-            swords.Add(Soulreaver);
-            swords.Add(Chillrend);
+            return Loot.weaponList[weaponIndex];           
         }
-
 
 
 
